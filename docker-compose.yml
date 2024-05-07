@@ -1,0 +1,10 @@
+version: "3.8"
+services:
+  redis:
+    image: redis:latest
+    container_name: stellar-redis
+    command: /bin/sh -c "redis-server --requirepass $REDIS_PASSWORD"
+    volumes:
+      - ./docker-data/redis:/data
+    ports:
+      - "${REDIS_PORT}:6379"
