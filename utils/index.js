@@ -33,4 +33,4 @@ export const assertEqual = (a, b, message) => {
   if (a !== b) {
     throw new Error(message);
   }
-}
+};

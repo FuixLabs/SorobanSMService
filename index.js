@@ -5,7 +5,7 @@ import morgan from "morgan";
 
 import { randomUUID } from "node:crypto";
 import { clearAllKeysFromCache, connectRedis } from "./helpers/redis.js";
-import rabbit, { } from "./helpers/rabbitMQ.js";
+import rabbit from "./helpers/rabbitMQ.js";
 import env from "./config.js";
 import logger from "./logger.js";
 import { assertEqual, delay } from "./utils/index.js";
@@ -31,18 +31,17 @@ router.post("/api/v1/mint", async (req, res) => {
     const correlationId = randomUUID();
     // eslint-disable-next-line no-async-promise-executor
     const promise = new Promise(async (resolve, reject) => {
-      const buff =
-        JSON.stringify({
-          data: {
-            hash: assets[0].assetName,
-          },
-          options: {
-            skipWait: false,
-            mock: mock || false,
-          },
-          id: correlationId,
-          type: "mint-token",
-        });
+      const buff = JSON.stringify({
+        data: {
+          hash: assets[0].assetName,
+        },
+        options: {
+          skipWait: false,
+          mock: mock || false,
+        },
+        id: correlationId,
+        type: "mint-token",
+      });
       const TEN_MINUTES = 60 * 1000 * 10;
       const rpcClient = rabbit.createRPCClient({
         confirm: true,
@@ -59,7 +58,7 @@ router.post("/api/v1/mint", async (req, res) => {
           correlationId: correlationId,
           durable: true,
         },
-        buff,
+        buff
       );
       clearTimeout(tim);
       logger.debug(response);

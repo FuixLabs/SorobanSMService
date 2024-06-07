@@ -113,7 +113,7 @@ class StellarService {
                 break;
             }
             // eslint-disable-next-line no-unused-vars
-          } catch (_) { ; }
+          } catch (_) {}
         }
         return data;
       } else {

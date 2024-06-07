@@ -20,7 +20,10 @@ logger.debug("RabbitMQ connection established");
 const rpcServerHandler = async (request, reply) => {
   const { data, options, id, type } = JSON.parse(request.body);
 
-  logger.debug("[+] Received message", JSON.stringify({ data, options, id, type }, null, 2));
+  logger.debug(
+    "[+] Received message",
+    JSON.stringify({ data, options, id, type }, null, 2)
+  );
 
   const correlationId = request?.correlationId;
 
@@ -39,10 +42,11 @@ const rpcServerHandler = async (request, reply) => {
               type,
               data: {
                 ...cert,
-              }
-            }), {
-            correlationId,
-          }
+              },
+            }),
+            {
+              correlationId,
+            }
           );
         }
         break;
@@ -59,9 +63,10 @@ const rpcServerHandler = async (request, reply) => {
           type,
         },
         error_message: error.message,
-      }), {
-      correlationId,
-    }
+      }),
+      {
+        correlationId,
+      }
     );
   }
   logger.debug("✅ Message processed successfully", id);
